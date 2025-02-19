@@ -10,12 +10,12 @@ from datasets import load_dataset
 from transformers import AutoTokenizer, set_seed
 from vllm import LLM, SamplingParams
 
-from retriever_safety.template import (
+from malicious_ir.template import (
     load_harmful_template,
     load_chat_template,
     load_system_message,
 )
-from retriever_safety.utils import generate_experiment_id, get_file_name, log_args
+from malicious_ir.utils import generate_experiment_id, get_file_name, log_args
 
 thisdir = os.path.dirname(os.path.realpath(__file__))
 parser = argparse.ArgumentParser(description="Generates harmful examples.")

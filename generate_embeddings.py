@@ -26,8 +26,8 @@ import torch
 from torch import nn
 
 from transformers import set_seed
-from retriever_safety.utils import log_args
-from retriever_safety.retrieval.utils import load_encoder, generate_embedding, setup_cfg_gpu, setup_for_distributed_mode, move_to_device, Tensorizer, QUERY_PROMPTS
+from malicious_ir.utils import log_args
+from malicious_ir.retrieval.utils import load_encoder, generate_embedding, setup_cfg_gpu, setup_for_distributed_mode, move_to_device, Tensorizer, QUERY_PROMPTS
 
 
 logging.basicConfig(

@@ -31,10 +31,10 @@ import torch
 from torch import nn
 
 from transformers import set_seed
-from retriever_safety.utils import log_args, str2bool
-from retriever_safety.retrieval.utils import load_encoder, generate_embedding, instantiate_index, setup_cfg_gpu, setup_for_distributed_mode, move_to_device, Tensorizer, QUERY_PROMPTS
-from retriever_safety.retrieval.faiss_indexers import DenseIndexer
-from retriever_safety.retrieval.validation_utils import calculate_matches
+from malicious_ir.utils import log_args, str2bool
+from malicious_ir.retrieval.utils import load_encoder, generate_embedding, instantiate_index, setup_cfg_gpu, setup_for_distributed_mode, move_to_device, Tensorizer, QUERY_PROMPTS
+from malicious_ir.retrieval.faiss_indexers import DenseIndexer
+from malicious_ir.retrieval.validation_utils import calculate_matches
 
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s"

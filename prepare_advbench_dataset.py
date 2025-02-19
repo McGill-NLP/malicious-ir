@@ -6,7 +6,7 @@ import json
 import logging
 import os
 
-from retriever_safety.utils import log_args
+from malicious_ir.utils import log_args
 
 thisdir = os.path.dirname(os.path.realpath(__file__))
 parser = argparse.ArgumentParser(description="Prepares the AdvBench dataset.")
