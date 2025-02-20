@@ -23,7 +23,7 @@ conda env create --name llm --file=vllm_environments.yml
 Our analysis consists of three general steps: corpus generation, corpus embedding, and retrieval inference. We go into more details for our further analysis below.
 
 ### 1. Corpus Generation
-The first step includes generating the malicious passages for [AdvBench](https://github.com/llm-attacks/llm-attacks/blob/main/data/advbench/harmful_behaviors.csv) queries (i.e., **AdvBench-IR**). You can find the generated samples in [data/malicious.jsonl](data/malicious.jsonl) or on [HuggingFace](). Checkout the [create_demonstration.sh](scripts/create_demonstration.sh) script for the detailed and exact arguments. This script will generate and chunk the malicious passages for retrieval.
+The first step includes generating the malicious passages for [AdvBench](https://github.com/llm-attacks/llm-attacks/blob/main/data/advbench/harmful_behaviors.csv) queries (i.e., **AdvBench-IR**). You can find the generated samples in [data/advbench-ir.jsonl](data/advbench-ir.jsonl) or on [HuggingFace](). Checkout the [create_demonstration.sh](scripts/create_demonstration.sh) script for the detailed and exact arguments. This script will generate and chunk the malicious passages for retrieval.
 
 ```bash
 python generate_malicious_passages.py \
