@@ -67,4 +67,24 @@ python retrieve.py \
 You can run the inference on benign datasets using the same script, but without the malicious arguments (e.g., `--eval_unsafety`, `--relevant_idx`, and `--malicious_prefix`). You can download TriviaQA and NaturalQuestions test samples from [DPR's repository](https://github.com/facebookresearch/DPR/blob/main/dpr/data/download_data.py) (`nq-test.qa.csv` and `trivia-test.qa.csv`).
 
 ## Fine-Grained Query Analysis
+
+
 ## Retrieval-Augmented Generation Analysis
+After performing steps 1-to-3, we can perform a RAG-based QA and evaluate the harmfulness of the LLMs' responses.
+To do so, you can checkout the [qa_with_retrieval.sh](scripts/qa_with_retrieval.sh) script. The following script will generate the responses for the queries.
+```bash
+python qa_with_rag.py \
+    --model_name_or_path "meta-llama/Meta-Llama-3-8B-Instruct" \
+    --template_name "QA" \
+    --data_file_path <address of the output from step 3> \
+    --malicious_prefix <id prefix of the malicious corpus> \
+    --num_docs <number of retrieved passages>
+```
+
+The following script will further evaluate the generated responses.
+```bash
+python evaluate_qa_response_safety.py \
+    --model_name_or_path "meta-llama/Llama-Guard-3-8B" \
+    --response_file_path <address of the previous step responses> \
+    --eval_file_path <address of the evaluation results file> \
+```
