@@ -25,7 +25,7 @@ do
             --max_new_tokens 512 \
             --template_name ${qa_template} \
             --data_file_path ${dir}/retrieve_advbench \
-            --malicious_prefix malicious_chunked_w_title_less_hypo \
+            --malicious_prefix malicious_chunked \
             --num_docs ${num_docs} >> ${dir}/${name}/m-${model#*/}_s-0.log 2>&1
     done
 done
