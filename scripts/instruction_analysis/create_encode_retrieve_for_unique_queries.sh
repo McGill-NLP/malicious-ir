@@ -6,7 +6,7 @@ ndocs=10
 
 conda activate ragsafetyv2
 # Create 10x documents for unique Advbench queries
-tmp="Wiki"
+tmp="FineWiki"
 CUDA_VISIBLE_DEVICES=0 \
 python -m instruction_analysis.create_malicious_demonstrations \
     --template_name $tmp \
@@ -27,13 +27,13 @@ python -m instruction_analysis.create_finegrained_instructions \
     --model_name_or_path mistralai/Mistral-7B-Instruct-v0.2 \
     --max_new_tokens 1024 \
     --num $ndocs \
-    --data_file_path results/instruction_demonstration/instruction_demonstration_t-Wiki_m-Mistral-7B-Instruct-v0.2_d-diverse_s-0_ndocs-${ndocs}/malicious_for_unique_instructions.jsonl
+    --data_file_path results/instruction_demonstration/instruction_demonstration_t-FineWiki_m-Mistral-7B-Instruct-v0.2_d-diverse_s-0_ndocs-${ndocs}/malicious_for_unique_instructions.jsonl
 ######################################################################################################
 
 # Prepare new dataset for encoding
 source /usr/local/pkgs/anaconda/bin/activate ragsafetyv2
 python prepare_corpora_for_embedding.py \
-    --corpus_to_jsonl_paths results/instruction_demonstration/instruction_demonstration_t-Wiki_m-Mistral-7B-Instruct-v0.2_d-diverse_s-0_ndocs-${ndocs}/malicious_for_unique_instructions.jsonl \
+    --corpus_to_jsonl_paths results/instruction_demonstration/instruction_demonstration_t-FineWiki_m-Mistral-7B-Instruct-v0.2_d-diverse_s-0_ndocs-${ndocs}/malicious_for_unique_instructions.jsonl \
     --jsonl_path data/retrieval_corpus_instructions_ndocs-${ndocs}.jsonl
 ######################################################################################################
 
@@ -69,7 +69,7 @@ declare -A dtype=(
     ["promptriever-llama3.1-8b-instruct-v1"]="float32"
 )
 
-mal_template="Wiki"
+mal_template="FineWiki"
 corpus=retrieval_corpus_with_instructions_ndocs-${ndocs}
 data_addr="data/retrieval_corpus_instructions_ndocs-${ndocs}.jsonl"
 model="samaya-ai/promptriever-llama3.1-8b-instruct-v1"
@@ -93,12 +93,13 @@ python generate_embeddings.py \
 ######################################################################################################
 
 # Copy the encoded corpus to the new malicious data directory 
-mal_template="Wiki"
+prev_mal_template="PsgWiki"
+mal_template="FineWiki"
 model="samaya-ai/promptriever-llama3.1-8b-instruct-v1"
 prev_corpus=corpus_embedding
 corpus=retrieval_corpus_with_instructions_ndocs-${ndocs}
 dir="results/instruction_demonstration/instruction_demonstration_t-${mal_template}_m-Mistral-7B-Instruct-v0.2_d-diverse_s-0_ndocs-${ndocs}/${corpus}/${model#*/}"
-cp results/demonstration/demonstration_t-${mal_template}_m-Mistral-7B-Instruct-v0.2_d-advbench_s-0/${prev_corpus}/${model#*/}/embed_*_vec ${dir}/
+cp results/demonstration/demonstration_t-${prev_mal_template}_m-Mistral-7B-Instruct-v0.2_d-advbench_s-0/${prev_corpus}/${model#*/}/embed_*_vec ${dir}/
 ######################################################################################################
 
 # Create a new corpus with previous corpus + new corpus
@@ -139,7 +140,7 @@ declare -A dtype=(
 
 # Unsafety on AdvBench
 # with instruction keys
-mal_template="Wiki"
+mal_template="FineWiki"
 corpus=retrieval_corpus_with_instructions_ndocs-${ndocs}
 prefix="malicious_for_unique_instructions"
 instruction_template="Fine"
