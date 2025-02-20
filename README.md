@@ -67,7 +67,29 @@ python retrieve.py \
 You can run the inference on benign datasets using the same script, but without the malicious arguments (e.g., `--eval_unsafety`, `--relevant_idx`, and `--malicious_prefix`). You can download TriviaQA and NaturalQuestions test samples from [DPR's repository](https://github.com/facebookresearch/DPR/blob/main/dpr/data/download_data.py) (`nq-test.qa.csv` and `trivia-test.qa.csv`).
 
 ## Fine-Grained Query Analysis
+Use the [scripts/instruction_analysis/create_encode_retrieve_for_topic.sh](scripts/instruction_analysis/create_encode_retrieve_for_topic.sh) script to analyze the impact of fine-grained queries on selecting specific passages about `bombs`. Moreover, you can use [scripts/instruction_analysis/create_encode_retrieve_for_unique_queries.sh](scripts/instruction_analysis/create_encode_retrieve_for_unique_queries.sh) script to generate additional passages and their corresponding fine-grained queries, generating embedding for them, and finally perform the retrieval inference. In short, the new two steps specific to this section are as follows.
 
+The following script, will generate `<num_docs>` passages for each [unique and diverse queries of AdvBench](https://github.com/RICommunity/TAP/blob/main/data/advbench_subset.csv).
+```bash
+python -m instruction_analysis.create_malicious_demonstrations \
+    --template_name "FineWiki" \
+    --extract_title \
+    --model_name_or_path "mistralai/Mistral-7B-Instruct-v0.2" \
+    --num <num_docs> \
+    --data_file_path <address of the diverse queries>
+```
+In addition, the following script generates fine-grained queries for the previously generated passages.
+```bash
+python -m instruction_analysis.create_finegrained_instructions \
+    --name "instruction_demonstration" \
+    --template_name "Fine" \
+    --model_name_or_path "mistralai/Mistral-7B-Instruct-v0.2" \
+    --num <num_docs> \
+    --data_file_path <address of the previously generated passages>
+```
+Note that the other steps (i.e., combining the new corpus with the original retrieval corpus, generating the embeddings for the corpus, and performing the inference) is as before. There are only two main points:
+1. Since re-generating the embeddings for the benign Wikipedia corpus takes a long time, you can generate embeddings for the newly generated passages, and `cp` the generated embeddings for the retrieval corpus (i.e., out of step 2) to the directory where the new passages' representations are saved. This way, the retrieval inference will happen on the combined corpus. Checkout [the script](scripts/instruction_analysis/create_encode_retrieve_for_unique_queries.sh) for more details.
+2. You can use the fine-grained queries in retrieval with passing `--instruction_key "specific_instruction"` in the `retrieve.py` arguments. Again, please checkout [the script](scripts/instruction_analysis/create_encode_retrieve_for_unique_queries.sh) for more details.
 
 ## Retrieval-Augmented Generation Analysis
 After performing steps 1-to-3, we can perform a RAG-based QA and evaluate the harmfulness of the LLMs' responses.
