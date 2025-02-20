@@ -7,7 +7,7 @@ python prepare_advbench_dataset.py \
 
 CUDA_VISIBLE_DEVICES=0 \
 python generate_malicious_passages.py \
-    --template_name Wiki \
+    --template_name PsgWiki \
     --extract_title \
     --model_name_or_path mistralai/Mistral-7B-Instruct-v0.2 \
     --max_new_tokens 1024 \
