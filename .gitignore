@@ -1,5 +1,7 @@
 # Project-specific 
+visualize.ipynb
 *.swp
+scripts_private/
 data/
 results/
 plot/
