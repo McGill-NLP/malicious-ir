@@ -1,6 +1,7 @@
 # *Exploiting Instruction-Following Retrievers for Malicious Information Retrieval*
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/McGill-NLP/malicious-ir/blob/main/LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-orange.svg)](https://github.com/McGill-NLP/malicious-ir/blob/main/LICENSE)
+[![AdvBench-IR on HF](https://img.shields.io/badge/HF_Dataset-AdvBench--IR-FFD21E)](https://huggingface.co/datasets/McGill-NLP/AdvBench-IR)
 
 This work studies the ability of retrievers to fulfill malicious queries, both when used *directly* and when used in a *retrieval augmented generation*-based setup. We find that given malicious requests, most retrievers can (for >50% of queries) select relevant harmful passages.
 We further uncover an emerging risk with instruction-following retrievers, where highly relevant harmful information can be surfaced through fine-grained instructions.
