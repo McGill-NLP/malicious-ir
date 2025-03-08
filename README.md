@@ -111,3 +111,17 @@ python evaluate_qa_response_safety.py \
     --response_file_path <address of the previous step responses> \
     --eval_file_path <address of the evaluation results file> \
 ```
+
+## Citation
+
+If you find this paper useful in your research, please consider citing:
+```
+@misc{malicious_ir_2025,
+      title={Exploiting Instruction-Following Retrievers for Malicious Information Retrieval}, 
+      author={Parishad BehnamGhader and Nicholas Meade and Siva Reddy},
+      year={2025},
+      eprint={TBD},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL}
+}
+```
