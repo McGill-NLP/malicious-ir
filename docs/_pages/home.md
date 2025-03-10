@@ -47,7 +47,7 @@ We show that retrievers can fetch malicious and harmful information. Please chec
 
 | An example of the top-1 retrieved passage for a malicious AdvBench-IR query | Malicious top-k accuracy of the retrievers on AdvBench-IR | 
 | -------- | -------  | 
-| <img src="https://github.com/user-attachments/assets/07a3cf34-13f5-46ca-90b3-0b61673a7b42" width="750" alt="retrieval_examples"/> | <img src="https://github.com/user-attachments/assets/f0102574-68da-4c98-986b-4d9f67237f96" width="350" alt="AdvBench-IR_results" style="vertical-align: top;"/> |
+| <img src="https://github.com/user-attachments/assets/7fe76ac8-d8ff-40b0-ba2d-d42e6caf954b" width="750" alt="retrieval_examples"/> | <img src="https://github.com/user-attachments/assets/f0102574-68da-4c98-986b-4d9f67237f96" width="350" alt="AdvBench-IR_results" style="vertical-align: top;"/> |
 
 ## Citation
 If you find this paper useful in your research, please consider citing:
