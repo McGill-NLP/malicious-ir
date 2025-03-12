@@ -1,5 +1,6 @@
 # *Exploiting Instruction-Following Retrievers for Malicious Information Retrieval*
 
+[![Paper](https://img.shields.io/badge/ArXiv-2503.08644-b31b1b)](https://arxiv.org/abs/2503.08644)
 [![License: MIT](https://img.shields.io/badge/License-MIT-orange.svg)](https://github.com/McGill-NLP/malicious-ir/blob/main/LICENSE)
 [![AdvBench-IR on HF](https://img.shields.io/badge/HF_Dataset-AdvBench--IR-FFD21E)](https://huggingface.co/datasets/McGill-NLP/AdvBench-IR)
 
