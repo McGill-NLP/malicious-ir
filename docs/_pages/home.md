@@ -57,8 +57,9 @@ If you find this paper useful in your research, please consider citing:
       title={Exploiting Instruction-Following Retrievers for Malicious Information Retrieval}, 
       author={Parishad BehnamGhader and Nicholas Meade and Siva Reddy},
       year={2025},
-      eprint={TBD},
+      eprint={2503.08644},
       archivePrefix={arXiv},
-      primaryClass={cs.CL}
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2503.08644}
 }
 ```
