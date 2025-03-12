@@ -2,7 +2,7 @@
 permalink: /
 layout: splash
 header:
-    overlay_color: rgb(221, 102, 63)
+    overlay_color: rgb(171, 74, 73)
     actions:
         - label: "Paper"
           url: https://arxiv.org/abs/2503.08644
