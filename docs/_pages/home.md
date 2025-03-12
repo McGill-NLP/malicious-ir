@@ -5,7 +5,7 @@ header:
     overlay_color: rgb(237, 27, 47)
     actions:
         - label: "Paper"
-          url: https://arxiv.org
+          url: https://arxiv.org/abs/2503.08644
           icon: "fas fa-book"
         - label: "Code"
           url: "https://github.com/McGill-NLP/malicious-ir"
