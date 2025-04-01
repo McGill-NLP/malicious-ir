@@ -8,6 +8,7 @@ from typing import Any, Dict
 from datasets import load_dataset
 from transformers import AutoTokenizer, set_seed
 from vllm import LLM, SamplingParams
+from openai import OpenAI
 
 from malicious_ir.template import (
     load_chat_template,
@@ -124,10 +125,16 @@ if __name__ == "__main__":
     dataset = dataset.rename_column("question", "instruction")
 
     system_message = load_system_message(args.model_name_or_path)
-    chat_template = load_chat_template(args.model_name_or_path)
+    if "gpt" not in args.model_name_or_path.lower():
+        chat_template = load_chat_template(args.model_name_or_path)
 
-    tokenizer = AutoTokenizer.from_pretrained(args.model_name_or_path, use_fast=True)
-    tokenizer.chat_template = chat_template
+        tokenizer = AutoTokenizer.from_pretrained(args.model_name_or_path, use_fast=True)
+        tokenizer.chat_template = chat_template
+    else:
+        tokenizer = None
+        client = OpenAI(
+            api_key=os.environ.get("OPENAI_API_KEY"),
+        )
 
     def _format_prompt(example: Dict[str, Any]) -> Dict[str, Any]:
 
@@ -154,11 +161,14 @@ if __name__ == "__main__":
 
         messages = get_message(system_message, user_content, args.model_name_or_path)
         
-        example["prompt"] = tokenizer.apply_chat_template(
-            messages,
-            add_generation_prompt=True,
-            tokenize=False,
-        )
+        if tokenizer is not None:
+            example["prompt"] = tokenizer.apply_chat_template(
+                messages,
+                add_generation_prompt=True,
+                tokenize=False,
+            )
+        else:
+            example["prompt"] = messages
         example["information_count"] = {"gold": gold_counter, "non_gold": non_gold_counter}
 
         return example
@@ -168,10 +178,20 @@ if __name__ == "__main__":
         top_p=args.top_p, temperature=args.temperature, max_tokens=args.max_new_tokens
     )
 
-    engine = LLM(args.model_name_or_path, trust_remote_code=True)
+    if "gpt" not in args.model_name_or_path.lower():
+        engine = LLM(args.model_name_or_path, trust_remote_code=True)
 
-    request_outputs = engine.generate(dataset["prompt"], sampling_params)
-    responses = [output.outputs[0].text for output in request_outputs]
+        request_outputs = engine.generate(dataset["prompt"], sampling_params)
+        responses = [output.outputs[0].text for output in request_outputs]
+    else:
+        responses = []
+        for i in range(len(dataset)):            
+            response = client.chat.completions.create(
+                model=args.model_name_or_path,
+                messages=dataset["prompt"][i],
+            )
+            responses.append(response.choices[0].message.content)
+
     responses = [[response.strip()] for response in responses]
 
     dataset = dataset.add_column("response", responses)
