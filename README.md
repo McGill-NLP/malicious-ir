@@ -13,6 +13,15 @@ Finally, we show that even safety-aligned LLMs, such as *Llama3*, can produce ha
 </p>
 
 This repository includes code and data for reproducing our results and analysis.
+## Fast Evaluation
+The following bash script will run the [LLM2Vec HF encoder](https://huggingface.co/McGill-NLP/LLM2Vec-Meta-Llama-31-8B-Instruct-mntp-unsup-simcse) on AdvBench-IR using the small wiki corpus. This corpus is designed by selecting hard passages from Wikipedia and augmenting them with synthetic malicious passages.
+```bash
+python advbenchir_fast_eval.py \
+    --model_name_or_path McGill-NLP/LLM2Vec-Meta-Llama-31-8B-Instruct-mntp \
+    --model_name_or_path_2 McGill-NLP/LLM2Vec-Meta-Llama-31-8B-Instruct-mntp-unsup-simcse\
+    --output_dir outputs
+```
+
 ## Installation
 We need two separate environments for recent LLMs' generations (i.e., generating malicious passages, fine-grained queries, and RAG-based QA) and retrieval (i.e., generating the corpus embeddings and retrieval inference).
 ```bash
